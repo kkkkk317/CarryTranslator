@@ -14,14 +14,14 @@ Audio Toolbox
 speech2text
 text2speech
 
-#실행방법
+# 실행방법
 guiRun.m 실행
 
-#학습 데이터 생성방법
+# 학습 데이터 생성방법
 궤적학습 시 - 궤적학습폴더의 bodyGestureDataset에 *90* 번 라인 파일명 저장
 지화학습 시 - 지화학습폴더의 handGestureDataset에 *98* 번 라인 파일명 저장
 
-#학습 방법
+# 학습 방법
 각폴더의 ____GestureTraining 실행
 **지화 학습** 시 *net* 파일 생성
 **궤적 학습** 시 *netLSTM* 파일 생성
