@@ -5,23 +5,23 @@
 MATLAB, Kinect v1, kinect SDK v1.8 설치
 
 # MATLAB 애드온
-Image Acquisition Toolbox Support Package for Kinect for Windows Sensor
-Image Acquisition Toolbox
-Computer Vision Toolbox
-Deep Learning Toolbox
-Deep Learning Toolbox Model for GoogLeNet Network
-Audio Toolbox
-speech2text
-text2speech
+ 1. Image Acquisition Toolbox Support Package for Kinect for Windows Sensor
+ 2. Image Acquisition Toolbox
+ 3. Computer Vision Toolbox
+ 4. Deep Learning Toolbox
+ 5. Deep Learning Toolbox Model for GoogLeNet Network
+ 6. Audio Toolbox
+ 7. speech2text
+ 8. text2speech
 
 # 실행방법
-guiRun.m 실행
+guiRun.m 실행<br>
 
 # 학습 데이터 생성방법
-궤적학습 시 - 궤적학습폴더의 bodyGestureDataset에 *90* 번 라인 파일명 저장
-지화학습 시 - 지화학습폴더의 handGestureDataset에 *98* 번 라인 파일명 저장
+궤적학습 시 - 궤적학습폴더의 bodyGestureDataset에 *90* 번 라인 파일명 저장<br>
+지화학습 시 - 지화학습폴더의 handGestureDataset에 *98* 번 라인 파일명 저장<br>
 
 # 학습 방법
-각폴더의 ____GestureTraining 실행
-**지화 학습** 시 *net* 파일 생성
-**궤적 학습** 시 *netLSTM* 파일 생성
+각폴더의 ____GestureTraining 실행 <br>
+**지화 학습** 시 *net* 파일 생성 <br>
+**궤적 학습** 시 *netLSTM* 파일 생성 <br>
