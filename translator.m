@@ -1,6 +1,5 @@
 % translator.m
 % GUI 기반 수화인식 프로그램
-% test
 
 
 function translator(net, netLSTM)
