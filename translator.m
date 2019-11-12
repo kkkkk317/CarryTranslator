@@ -1,6 +1,7 @@
 % translator.m
 % GUI 기반 수화인식 프로그램
 
+
 function translator(net, netLSTM)
 %데이터 저장할 자바 연결리스트 생성
 import java.util.LinkedList
