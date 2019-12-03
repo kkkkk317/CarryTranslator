@@ -1,36 +1,36 @@
 % bodyGestureDataset.m
-% GUI ±â¹İ ±ËÀû ¿µ»ó ÀúÀå ÇÁ·Î±×·¥
+% GUI ê¸°ë°˜ ê¶¤ì  ì˜ìƒ ì €ì¥ í”„ë¡œê·¸ë¨
 function bodyGestureDataset()
 
-% Àü¿ª º¯¼ö ¼±¾ğ
+% ì „ì—­ ë³€ìˆ˜ ì„ ì–¸
 clear x;
 global x;
 
-% Å°³ØÆ® ÃÊ±âÈ­
-% ½ºÄÌ·¹Åæ ÀÎ½ÄÀ» À§ÇÑ depth Ä·
+% í‚¤ë„¥íŠ¸ ì´ˆê¸°í™”
+% ìŠ¤ì¼ˆë ˆí†¤ ì¸ì‹ì„ ìœ„í•œ depth ìº 
 depthVid = videoinput('kinect', 2);
 triggerconfig(depthVid, 'manual');
 depthVid.FramesPerTrigger = 1;
 depthVid.TriggerRepeat = inf;
 set(getselectedsource(depthVid), 'TrackingMode', 'Skeleton');
 
-% color Ä· ÃÊ±âÈ­
+% color ìº  ì´ˆê¸°í™”
 colorVid = videoinput('kinect', 1);
 triggerconfig(colorVid, 'manual');
 colorVid.FramesPerTrigger = 1;
 colorVid.TriggerRepeat = inf;
 
-% ÇÔ¼ö¸¦ À§ÇÑ Å¸ÀÌ¸Ó ¼³Á¤
+% í•¨ìˆ˜ë¥¼ ìœ„í•œ íƒ€ì´ë¨¸ ì„¤ì •
 t = timer('TimerFcn', @dispDepth, 'Period', 0.1, ...
     'executionMode', 'fixedRate');
 
-% GUI ÇÁ·¹ÀÓ¿öÅ© ¼³Á¤
+% GUI í”„ë ˆì„ì›Œí¬ ì„¤ì •
 window=figure('Color',[0.9255 0.9137 0.8471],'Name','Depth Camera',...
     'DockControl','off','Units','Pixels',...
     'toolbar','none',...
     'Position',[50 50 800 600]);
 
-% ±ËÀû ¿µ»ó ÀúÀåÀ» ½ÃÀÛÇÏ±â À§ÇÑ ¹öÆ° ¼³Á¤
+% ê¶¤ì  ì˜ìƒ ì €ì¥ì„ ì‹œì‘í•˜ê¸° ìœ„í•œ ë²„íŠ¼ ì„¤ì •
 startb=uicontrol('Parent',window,'Style','pushbutton','String',...
     'START',...
     'FontSize',11 ,...
@@ -38,7 +38,7 @@ startb=uicontrol('Parent',window,'Style','pushbutton','String',...
     'Position',[0.22 0.02 0.16 0.08],...
     'Callback',@startCallback);
 
-% ±ËÀû ¿µ»ó ÀúÀåÀ» ¸ØÃß±â À§ÇÑ ¹öÆ° ¼³Á¤
+% ê¶¤ì  ì˜ìƒ ì €ì¥ì„ ë©ˆì¶”ê¸° ìœ„í•œ ë²„íŠ¼ ì„¤ì •
 stopb=uicontrol('Parent',window,'Style','pushbutton','String',...
     'STOP',...
     'FontSize',11 ,...
@@ -46,14 +46,14 @@ stopb=uicontrol('Parent',window,'Style','pushbutton','String',...
     'Position',[0.5 0.02 0.16 0.08],...
     'Callback',@stopCallback);
 
-% º¯¼ö ÃÊ±âÈ­
+% ë³€ìˆ˜ ì´ˆê¸°í™”
 i = 0;
 m=0;
 
-% ±íÀÌ¸¦ º¸¿©ÁÖ±â À§ÇÑ ÇÔ¼ö ¼±¾ğ
+% ê¹Šì´ë¥¼ ë³´ì—¬ì£¼ê¸° ìœ„í•œ í•¨ìˆ˜ ì„ ì–¸
     function dispDepth(obj, event)
         
-        % ¿µ»ó Ãâ·Â(0~4096 ·Î ÇÁ·¹ÀÓ ÀçÁöÁ¤)
+        % ì˜ìƒ ì¶œë ¥(0~4096 ë¡œ í”„ë ˆì„ ì¬ì§€ì •)
         trigger(colorVid);
         trigger(depthVid);
         [depthMap, ~, depthMetaData] = getdata(depthVid);
@@ -62,32 +62,32 @@ m=0;
         subplot(2,2,1);
         imshow(colorMetaData, [0 4096]);
         
-        % ¿µ»ó Ã³¸®
-        % ½ºÄÌ·¹Åæ ÃßÀûÀÌ µÆÀ» ¶§
+        % ì˜ìƒ ì²˜ë¦¬
+        % ìŠ¤ì¼ˆë ˆí†¤ ì¶”ì ì´ ëì„ ë•Œ
         if idx ~= 0
             
-            % »óÃ¼ À§Ä¡ ÃßÀû
+            % ìƒì²´ ìœ„ì¹˜ ì¶”ì 
             body = depthMetaData.JointDepthIndices(3,:,idx);
             
-            % »óÃ¼ µ¥ÀÌÅÍ°ª ÃßÃâ
-            radius = 300;
+            % ìƒì²´ ë°ì´í„°ê°’ ì¶”ì¶œ
+            radius = round(300 - zCoord / 50);
             bodyBox = [body(1)-0.75*radius body(2)-0.3*radius 1.5*radius radius];
             
-            % »ç°¢ÇüÀ¸·Î »óÃ¼ Å©·Ó ÈÄ È­¸é¿¡ Ç¥½Ã
+            % ì‚¬ê°í˜•ìœ¼ë¡œ ìƒì²´ í¬ë¡­ í›„ í™”ë©´ì— í‘œì‹œ
             rectangle('position', bodyBox, 'EdgeColor', [1 1 0]);
             bodyImage = imcrop(colorMetaData,bodyBox);
             
-            % µ¥ÀÌÅÍ ÃßÃâÀÌ µÆÀ» ¶§
+            % ë°ì´í„° ì¶”ì¶œì´ ëì„ ë•Œ
             if ~isempty(bodyImage)
                 
                 m=m+1;
                 x(:,:,:,m)= imresize(bodyImage,[300,450]);
                 
-                % 30 ÇÁ·¹ÀÓÀÌ µÇ¾úÀ» ¶§ ±ËÀû ¿µ»óÀ» Æú´õ¿¡ ÀúÀå
+                % 30 í”„ë ˆì„ì´ ë˜ì—ˆì„ ë•Œ ê¶¤ì  ì˜ìƒì„ í´ë”ì— ì €ì¥
                 if(m==30)
                     i = i+1;
-                    %¿øÇÏ´Â µ¿ÀÛÀ» ÀÔ·ÂÇÏ¿© ÀúÀå
-                    outputVideo = VideoWriter(fullfile(strcat('¼öÈ­¿µ»óÆú´õ/¿¹½Ã/¿¹½Ã','_',num2str(i))));
+                    %ì›í•˜ëŠ” ë™ì‘ì„ ì…ë ¥í•˜ì—¬ ì €ì¥
+                    outputVideo = VideoWriter(fullfile(strcat('ìˆ˜í™”ì˜ìƒí´ë”/ì˜ˆì‹œ/ì˜ˆì‹œ','_',num2str(i))));
                     outputVideo.FrameRate = 10;
                     open(outputVideo)
                     
@@ -104,7 +104,7 @@ m=0;
         end
     end
 
-% °¢ ±â´É¿¡ ´ëÇÑ callback ÇÔ¼ö ¼±¾ğ
+% ê° ê¸°ëŠ¥ì— ëŒ€í•œ callback í•¨ìˆ˜ ì„ ì–¸
     function startCallback(obj, event)
         start(colorVid);
         start(depthVid);
