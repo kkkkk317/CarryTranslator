@@ -1,55 +1,57 @@
 % handGestureDataset.m
-% GUI ±â¹İ ÁöÈ­ ÀÌ¹ÌÁö ÀúÀå ÇÁ·Î±×·¥
+% GUI ê¸°ë°˜ ì§€í™” ì´ë¯¸ì§€ ì €ì¥ í”„ë¡œê·¸ë¨
 function handGestureDataset()
 
-% Å°³ØÆ® ÃÊ±âÈ­
-% ½ºÄÌ·¹Åæ ÀÎ½ÄÀ» À§ÇÑ depth Ä·
+% í‚¤ë„¥íŠ¸ ì´ˆê¸°í™”
+% ìŠ¤ì¼ˆë ˆí†¤ ì¸ì‹ì„ ìœ„í•œ depth ìº 
 depthVid = videoinput('kinect', 2);
 triggerconfig(depthVid, 'manual');
 depthVid.FramesPerTrigger = 1;
 depthVid.TriggerRepeat = inf;
 set(getselectedsource(depthVid), 'TrackingMode', 'Skeleton');
 
-% color Ä· ÃÊ±âÈ­
+% color ìº  ì´ˆê¸°í™”
 colorVid = videoinput('kinect', 1);
 triggerconfig(colorVid, 'manual');
 colorVid.FramesPerTrigger = 1;
 colorVid.TriggerRepeat = inf;
 
-% ÇÔ¼ö¸¦ À§ÇÑ Å¸ÀÌ¸Ó ¼³Á¤
+% í•¨ìˆ˜ë¥¼ ìœ„í•œ íƒ€ì´ë¨¸ ì„¤ì •
 t = timer('TimerFcn', @dispDepth, 'Period', 0.05, ...
     'executionMode', 'fixedRate');
 
-% GUI ÇÁ·¹ÀÓ¿öÅ© ¼³Á¤
-window=figure('Color',[0.9255 0.9137 0.8471],'Name','Depth Camera',...
+% GUI í”„ë ˆì„ì›Œí¬ ì„¤ì •
+window=figure('Color',[0 0 0],'Name','Depth Camera',...
     'DockControl','off','Units','Pixels',...
     'toolbar','none',...
     'Position',[50 50 800 600]);
 
-% ÁöÈ­ ÀÌ¹ÌÁö ÀúÀåÀ» ½ÃÀÛÇÏ±â À§ÇÑ ¹öÆ° ¼³Á¤
+% ì§€í™” ì´ë¯¸ì§€ ì €ì¥ì„ ì‹œì‘í•˜ê¸° ìœ„í•œ ë²„íŠ¼ ì„¤ì •
 startb=uicontrol('Parent',window,'Style','pushbutton','String',...
     'START',...
-    'FontSize',11 ,...
+    'FontSize',15 ,...
     'Units','normalized',...
     'Position',[0.22 0.02 0.16 0.08],...
     'Callback',@startCallback);
+startb.BackgroundColor = '#ff8c00';
+startb.ForegroundColor = 'white';
 
-% ÁöÈ­ ÀÌ¹ÌÁö ÀúÀåÀ» ¸ØÃß±â À§ÇÑ ¹öÆ° ¼³Á¤
+% ì§€í™” ì´ë¯¸ì§€ ì €ì¥ì„ ë©ˆì¶”ê¸° ìœ„í•œ ë²„íŠ¼ ì„¤ì •
 stopb=uicontrol('Parent',window,'Style','pushbutton','String',...
     'STOP',...
-    'FontSize',11 ,...
+    'FontSize',15 ,...
     'Units','normalized',...
     'Position',[0.5 0.02 0.16 0.08],...
     'Callback',@stopCallback);
 
-% º¯¼ö ÃÊ±âÈ­
+% ë³€ìˆ˜ ì´ˆê¸°í™”
 i = 0;
 m = 0;
 
-% ±íÀÌ¸¦ º¸¿©ÁÖ±â À§ÇÑ ÇÔ¼ö ¼±¾ğ
+% ê¹Šì´ë¥¼ ë³´ì—¬ì£¼ê¸° ìœ„í•œ í•¨ìˆ˜ ì„ ì–¸
     function dispDepth(obj, event)
         
-        % ¿µ»ó Ãâ·Â(0~4096 ·Î ÇÁ·¹ÀÓ ÀçÁöÁ¤)
+        % ì˜ìƒ ì¶œë ¥(0~4096 ë¡œ í”„ë ˆì„ ì¬ì§€ì •)
         trigger(colorVid);
         trigger(depthVid);
         [depthMap, ~, depthMetaData] = getdata(depthVid);
@@ -58,29 +60,29 @@ m = 0;
         subplot(2,2,1);
         imshow(depthMap, [0 4096]);
         
-        % ¿µ»ó Ã³¸®
-        % ½ºÄÌ·¹Åæ ÃßÀûÀÌ µÆÀ» ¶§
+        % ì˜ìƒ ì²˜ë¦¬
+        % ìŠ¤ì¼ˆë ˆí†¤ ì¶”ì ì´ ëì„ ë•Œ
         if idx ~= 0
             
-            % ¿À¸¥¼Õ À§Ä¡ ÃßÀû
+            % ì˜¤ë¥¸ì† ìœ„ì¹˜ ì¶”ì 
             rightHand = depthMetaData.JointDepthIndices(12,:,idx);
             
-            % ¿À¸¥¼Õ µ¥ÀÌÅÍ°ª ÃßÃâ
+            % ì˜¤ë¥¸ì† ë°ì´í„°ê°’ ì¶”ì¶œ
             zCoord = 1e3*min(depthMetaData.JointWorldCoordinates(12,:,idx));
             radius = round(90 - zCoord / 50);
             rightHandBox = [rightHand-0.5*radius 1.2*radius 1.2*radius];
             
-            % »ç°¢ÇüÀ¸·Î ¿À¸¥¼Õ Å©·Ó ÈÄ È­¸é¿¡ Ç¥½Ã
+            % ì‚¬ê°í˜•ìœ¼ë¡œ ì˜¤ë¥¸ì† í¬ë¡­ í›„ í™”ë©´ì— í‘œì‹œ
             rectangle('position', rightHandBox, 'EdgeColor', [1 1 0]);
             handColorImage = imcrop(colorMap,rightHandBox);
             result = rgb2gray(handColorImage);
             subplot(2,2,3);
             imshow(handColorImage, [0 4096]);
             
-            % µ¥ÀÌÅÍ ÃßÃâÀÌ µÆÀ» ¶§
+            % ë°ì´í„° ì¶”ì¶œì´ ëì„ ë•Œ
             if ~isempty(handColorImage)
                 
-                % ¹è°æ ÀüÃ³¸®
+                % ë°°ê²½ ì „ì²˜ë¦¬
                 imageSize = size(handColorImage);
                 
                 for k = 1:imageSize(1)
@@ -91,18 +93,18 @@ m = 0;
                     end
                 end
                 
-                % ÁöÈ­ ÀÌ¹ÌÁö¸¦ Æú´õ¿¡ ÀúÀå
+                % ì§€í™” ì´ë¯¸ì§€ë¥¼ í´ë”ì— ì €ì¥
                 i = i+1;
                 if (mod(i,5)==1)
-                    %¿øÇÏ´Â ¹®ÀÚ¸¦ ³Ö¾î¼­ ÇĞ½À
-                    imwrite(imresize(handColorImage,[224,224]), strcat('hangeul/¤¡/¤¡_',num2str(m),'.png'),'png');
+                    %ì›í•˜ëŠ” ë¬¸ìë¥¼ ë„£ì–´ì„œ í•™ìŠµ
+                    imwrite(imresize(handColorImage,[224,224]), strcat('hangeul/ã„±/ã„±_',num2str(m),'.png'),'png');
                     m=m+1;
                 end
             end
         end
     end
 
-% °¢ ±â´É¿¡ ´ëÇÑ callback ÇÔ¼ö ¼±¾ğ
+% ê° ê¸°ëŠ¥ì— ëŒ€í•œ callback í•¨ìˆ˜ ì„ ì–¸
     function startCallback(obj, event)
         start(colorVid);
         start(depthVid);
@@ -116,4 +118,3 @@ m = 0;
         m=0;
     end
 end
-
