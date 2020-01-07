@@ -25,3 +25,6 @@ guiRun.m 실행<br>
 각폴더의 ____GestureTraining 실행 <br>
 **지화 학습** 시 *net* 파일 생성 <br>
 **궤적 학습** 시 *netLSTM* 파일 생성 <br>
+
+# 시연 영상
+https://youtu.be/ehnBKHfFvtA
